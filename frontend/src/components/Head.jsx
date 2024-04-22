@@ -14,7 +14,7 @@ const Head = () => {
         </a> 
       </nav>
       <h1 className=''>
-        Summarize articles from link or pdf
+        Summarize articles from Link or Paragraph
       </h1>
     </header>
   )
