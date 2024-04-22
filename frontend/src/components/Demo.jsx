@@ -14,6 +14,7 @@ const Demo = () => {
 
   const [paragraph, setParagraph] = useState("");
   const [paragraphSummary, setParagraphSummary] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [allArticles, setAllArticles] = useState([]);
 
@@ -48,6 +49,7 @@ const Demo = () => {
 
   const handleParagraphSummary = async(e) => {
     e.preventDefault();
+    setLoading(true);
 
     const data = await axios.post("http://127.0.0.1:8000/summarize", {
       paragraph: paragraph
@@ -55,6 +57,7 @@ const Demo = () => {
     console.log(data);
     if(data) {
       setParagraphSummary(data.data);
+      setLoading(false);
     }
 
   }
@@ -102,22 +105,29 @@ const Demo = () => {
           ))}
         </div>
       </div>
-      <form onSubmit={handleParagraphSummary}>
+      <div className='flex flex-col w-[100vw] gap-2 items-center mt-4'>
+      <form onSubmit={handleParagraphSummary}
+      className='relative flex flex-col justify-center items-center space-y-2 md:w-[50vw] w-[80vw]'
+      >
+        <h1>Paragraph Summarizer</h1>
         <textarea 
           type='text'
           placeholder='Enter Text to Summarize'
           value={paragraph}
           onChange={(e) => setParagraph(e.target.value)}
-          className='peer outline-none bg-inherit ml-2 w-full h-[20vh]'
+          className='outline-none bg-inherit ml-2 w-full h-[20vh]'
           required
         />
         <button
           type='submit'
-          className='peer-focus:border-black-900 peer-focus:text-black-900 text-gray-900 border-gray-900'
+          className='bg-blue-700 text-white text-sm pt-1 pb-1 pl-2 pr-2 rounded-3xl'
+          disabled={loading}
           >
-            <SendIcon />
+            {loading ? <p>Loading</p> : <p>Summarize</p>}
+            
           </button> 
       </form>
+      </div>
       <div className=''>
         {isFetching ? (
           <button type="button" class="bg-indigo-500 ..." disabled>
@@ -147,8 +157,9 @@ const Demo = () => {
       </div>
       <div>
         {paragraphSummary && (
-          <div>
-            <p>{paragraphSummary}</p>
+          <div className='flex flex-col gap-3 w-[98vw] p-4 items-center bg-slate-200 mt-2 ml-2 mr-2'>
+            <h2 className='font-bold text-xl text-gray-600 text-center'>Paragraph <span className="text-blue-600">Summary</span></h2>
+            <p className='text-left text-gray-600 text-[12px]'>{paragraphSummary}</p>
           </div>
         )}
       </div>

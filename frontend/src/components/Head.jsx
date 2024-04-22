@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from "../../public/images/logo.png"
+import logo from "/images/logo.png"
 import CallMadeIcon from '@mui/icons-material/CallMade';
 
 const Head = () => {
@@ -13,7 +13,7 @@ const Head = () => {
           </button>
         </a> 
       </nav>
-      <h1 className=''>
+      <h1 className='text-3xl bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'>
         Summarize articles from Link or Paragraph
       </h1>
     </header>
