@@ -33,33 +33,44 @@ const Demo = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
 
-    const { data } = await getSummary({ articleUrl: article.url });
+    try {
+      const { data } = await getSummary({ articleUrl: article.url });
 
-    if(data?.summary){
-      const newArticle = { ...article, summary: data.summary };
+      if(data?.summary){
+        const newArticle = { ...article, summary: data.summary };
 
-      const updatedArticles = [newArticle, ...allArticles];
+        const updatedArticles = [newArticle, ...allArticles];
 
-      setArticle(newArticle);
-      setAllArticles(updatedArticles);
+        setArticle(newArticle);
+        setAllArticles(updatedArticles);
 
-      localStorage.setItem('articles', JSON.stringify(updatedArticles));
+        localStorage.setItem('articles', JSON.stringify(updatedArticles));
+      }
+    } catch (error) {
+      setParagraphSummary("Sorry for inconvenience, the python backend is costly to host and thus can't be used online. Please clone the repositery and run in the local machine. Thank you!")
     }
+    
   }
 
   const handleParagraphSummary = async(e) => {
     e.preventDefault();
     setLoading(true);
 
-    const data = await axios.post("http://127.0.0.1:8000/summarize", {
-      paragraph: paragraph
-    });
-    console.log(data);
-    if(data) {
-      setParagraphSummary(data.data);
-      setLoading(false);
+    try {
+      const data = await axios.post("http://127.0.0.1:8000/summarize", {
+        paragraph: paragraph
+      });
+      console.log(data);
+      if(data) {
+        setParagraphSummary(data.data);
+        setLoading(false);
+      } else {
+        setParagraphSummary("Sorry for inconvenience, the python backend is costly to host and thus can't be used online. Please clone the repositery and run in the local machine. Thank you!")
+      }
+    } catch (error) {
+      setParagraphSummary("Sorry for inconvenience, the python backend is costly to host and thus can't be used online. Please clone the repositery and run in the local machine. Thank you!")
     }
-
+    setLoading(false);
   }
 
   return (
