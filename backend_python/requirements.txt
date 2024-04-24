@@ -1,4 +1,5 @@
-transformers
-tf-keras
 fastapi
 pydantic
+uvicorn
+transformers
+tf_keras
