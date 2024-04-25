@@ -109,7 +109,7 @@ const Demo = () => {
               className='bg-slate-200 relative flex justify-center items-center space-x-4 md:w-[50vw] w-[80vw] pr-2 pl-2'
             >
               <div className='object-contain'>
-                <ContentCopyIcon sx={{ color: "black" }, { fontSize: 18}}/>
+                <ContentCopyIcon sx={[{ color: "black" }, { fontSize: 18}]}/>
               </div>
               <p className='flex-1 text-blue-700 font-medium text-[12px]'>{item.url}</p>
             </div>
